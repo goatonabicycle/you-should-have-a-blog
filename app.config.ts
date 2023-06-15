@@ -1,6 +1,6 @@
 export default defineAppConfig({
   alpine: {
-    title: 'Alpine',
+    title: 'Rowan Deysel',
     description: 'The minimalist blog theme',
     image: {
       src: '/social-card-preview.png',
@@ -23,19 +23,19 @@ export default defineAppConfig({
       },
       navigation: true, // possible value are : true | false
       alignment: 'center', // possible value are : 'none' | 'left' | 'center' | 'right'
-      message: 'Follow me on' // string that will be displayed in the footer (leave empty or delete to disable)
+      message: 'Don\'t follow me on' // string that will be displayed in the footer (leave empty or delete to disable)
     },
     socials: {
-      twitter: 'nuxtlabs',
-      instagram: 'atinuxt',
+      twitter: '@goatonabicycle',
+      instagram: 'goatonabicycle',
       linkedin: {
         icon: 'uil:linkedin',
         label: 'LinkedIn',
-        href: 'https://www.linkedin.com/company/nuxtlabs'
+        href: 'https://www.linkedin.com/in/rowan-deysel-17328219/'
       }
     },
     form: {
-      successMessage: 'Message sent. Thank you!'
+      successMessage: 'Message sent. Thank you! I\'ll respond within literal seconds.'
     }
   }
 })
