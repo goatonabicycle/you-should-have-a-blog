@@ -1,0 +1,134 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			.posts-link {
+				display: inline-block;
+				position: relative;
+				outline: none;
+				text-decoration: none;
+				color: var(--ink);
+				padding: 0.2em 0.5em;
+				border-radius: 2px;
+				transition: all 0.2s ease;
+			}
+			
+			.posts-link::before {
+				content: '> ';
+				color: var(--color-accent);
+				font-weight: 700;
+				opacity: 0;
+				transition: opacity 0.2s ease;
+			}
+			
+			.posts-link:focus {
+				background: rgba(125, 211, 252, 0.05);
+				color: var(--color-accent);
+				text-decoration: underline;
+				text-decoration-color: var(--color-accent);
+			}
+			
+			.posts-link:focus::before {
+				opacity: 1;
+			}
+			
+			.posts-link:hover {
+				color: var(--color-accent);
+				text-decoration: underline;
+				text-decoration-color: var(--color-accent);
+			}
+			
+			.posts-link:hover::before {
+				opacity: 0.6;
+			}
+			
+			.posts-link::after {
+				content: '↵';
+				margin-left: 0.5em;
+				color: var(--color-dim);
+				font-size: 0.8em;
+				opacity: 0.7;
+				transition: opacity 0.2s ease;
+			}
+			
+			.posts-link:focus::after {
+				color: var(--color-accent);
+				opacity: 1;
+			}
+			
+			.keyboard-hint {
+				position: fixed;
+				bottom: 1em;
+				left: 50%;
+				transform: translateX(-50%);
+				color: var(--color-dim);
+				font-size: 0.7em;
+				opacity: 0.6;
+				font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+				background: rgba(26, 26, 26, 0.8);
+				padding: 0.3em 0.8em;
+				border-radius: 4px;
+				border: 1px solid var(--border);
+				backdrop-filter: blur(8px);
+			}
+			
+			.kbd {
+				background: var(--paper-alt);
+				padding: 0.1em 0.3em;
+				border-radius: 2px;
+				border: 1px solid var(--border);
+				font-size: 0.9em;
+				color: var(--ink);
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Hello!</h1>
+			<p>I am Rowan.</p>
+			<p>I write about things I find interesting: <a href="/blog" class="posts-link" id="mainLink">Posts</a></p>
+		</main>
+
+		<Footer />
+		
+		<p class="keyboard-hint">
+			<span class="kbd">Enter</span> • <span class="kbd">Tab</span> • <span class="kbd">↑↓</span> • <span class="kbd">Backspace</span>
+		</p>
+		
+		<script>
+			// Auto-focus the main link and handle Enter key
+			const mainLink = document.getElementById('mainLink');
+			
+			// Focus the link by default
+			mainLink.focus();
+			
+			// Handle keyboard navigation
+			document.addEventListener('keydown', (e) => {
+				// Enter key navigates to posts
+				if (e.key === 'Enter' && document.activeElement !== mainLink) {
+					window.location.href = '/blog';
+				}
+				
+				// Arrow key navigation
+				if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+					mainLink.focus();
+				}
+				
+				// Backspace goes back
+				if (e.key === 'Backspace' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+					e.preventDefault();
+					history.back();
+				}
+			});
+		</script>
+	</body>
+</html>

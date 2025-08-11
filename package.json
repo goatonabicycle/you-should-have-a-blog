@@ -1,24 +1,18 @@
 {
-  "name": "alpine-starter",
-  "version": "0.1.0",
-  "private": true,
+  "name": "typesomewords",
+  "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "dev": "nuxi dev",
-    "build": "nuxi build",
-    "generate": "nuxi generate",
-    "preview": "nuxi preview",
-    "lint": "eslint ."
-  },
-  "devDependencies": {
-    "@nuxt-themes/alpine": "^1.6.0",
-    "@nuxt/devtools": "^0.5.5",
-    "@nuxt/eslint-config": "^0.1.1",
-    "@nuxtjs/plausible": "^0.2.1",
-    "@types/node": "^20.2.5",
-    "eslint": "^8.42.0",
-    "nuxt": "^3.5.3"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "@vercel/analytics": "^1.0.1"
+    "@astrojs/mdx": "^4.3.3",
+    "@astrojs/rss": "^4.0.12",
+    "@astrojs/sitemap": "^3.4.2",
+    "astro": "^5.12.9",
+    "sharp": "^0.34.2"
   }
 }

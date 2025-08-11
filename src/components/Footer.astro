@@ -1,0 +1,80 @@
+---
+import InstagramIcon from "./icons/InstagramIcon.astro";
+import LinkedInIcon from "./icons/LinkedInIcon.astro";
+import GitHubIcon from "./icons/GitHubIcon.astro";
+import EmailIcon from "./icons/EmailIcon.astro";
+
+const today = new Date();
+---
+
+<footer>
+	<div class="social-links">
+		<a
+			href="mailto:malice.peanutbutter@gmail.com"
+			title="Email"
+		>
+			<EmailIcon size={16} />
+		</a>
+		<span class="separator">·</span>
+		<a
+			href="https://instagram.com/goatonabicycle"
+			target="_blank"
+			rel="noopener"
+			title="Instagram"
+		>
+			<InstagramIcon size={16} />
+		</a>
+		<span class="separator">·</span>
+		<a
+			href="https://www.linkedin.com/in/rowan-deysel-17328219/"
+			target="_blank"
+			rel="noopener"
+			title="LinkedIn"
+		>
+			<LinkedInIcon size={16} />
+		</a>
+		<span class="separator">·</span>
+		<a
+			href="https://github.com/goatonabicycle"
+			target="_blank"
+			rel="noopener"
+			title="GitHub"
+		>
+			<GitHubIcon size={16} />
+		</a>
+	</div>
+</footer>
+<style>
+	footer {
+		border-top: 1px solid var(--border);
+		padding: 2em 1em;
+		margin-top: 3em;
+		text-align: center;
+		font-size: 0.85em;
+		color: var(--color-dim);
+	}
+	footer p {
+		margin: 0 0 0.5em 0;
+	}
+	.social-links {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 0.5em;
+		font-size: 0.9em;
+	}
+	.social-links a {
+		color: var(--color-dim);
+		text-decoration: none;
+		transition: color 0.2s;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3em;
+	}
+	.social-links a:hover {
+		color: var(--color-accent);
+	}
+	.separator {
+		color: var(--color-dim);
+	}
+</style>

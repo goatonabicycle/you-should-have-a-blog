@@ -1,0 +1,294 @@
+---
+import { getCollection } from "astro:content";
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import Header from "../../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+
+const posts = (await getCollection("blog")).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			h1 {
+				margin-bottom: 1.5rem;
+				font-size: 1.2em;
+			}
+			.posts-table {
+				width: 100%;
+				border-spacing: 0;
+				border-collapse: separate;
+			}
+			.posts-table tbody tr {
+				border: none;
+				transition: all 0.2s ease;
+			}
+			.posts-table tbody tr:focus-within,
+			.posts-table tbody tr.keyboard-focus {
+				background: rgba(125, 211, 252, 0.05);
+			}
+			.posts-table td {
+				padding: 0.4rem 0;
+				border: none;
+				vertical-align: baseline;
+			}
+			.posts-table {
+				margin-left: 1.5em;
+			}
+			
+			.posts-table td:first-child {
+				width: 90px;
+				padding-right: 1.5em;
+			}
+			.posts-table a {
+				text-decoration: none;
+				color: var(--ink);
+				display: block;
+				padding: 0.2em 0;
+				outline: none;
+				position: relative;
+			}
+			
+			.posts-table a::before {
+				content: '> ';
+				color: var(--color-accent);
+				font-weight: 700;
+				font-size: 0.9em;
+				opacity: 0;
+				transition: opacity 0.2s ease;
+			}
+			
+			.posts-table a:focus::before {
+				opacity: 1;
+			}
+			
+			/* Loading animation */
+			.loading-overlay {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(26, 26, 26, 0.95);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				z-index: 9999;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.3s ease;
+			}
+			
+			.loading-overlay.active {
+				opacity: 1;
+				pointer-events: all;
+			}
+			
+			.terminal-loader {
+				font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+				color: var(--color-accent);
+				font-size: 1em;
+				display: flex;
+				align-items: center;
+				gap: 0.5em;
+			}
+			
+			.dots {
+				display: inline-block;
+			}
+			
+			.dots::after {
+				content: '';
+				animation: dots 1.5s infinite;
+			}
+			
+			@keyframes dots {
+				0% { content: ''; }
+				33% { content: '.'; }
+				66% { content: '..'; }
+				100% { content: '...'; }
+			}
+			.posts-table a:focus {
+				color: var(--color-accent);
+			}
+			.date {
+				color: var(--color-dim);
+				font-size: 0.85em;
+				font-family: inherit;
+				text-align: left;
+			}
+			.title {
+				font-size: 1em;
+				font-weight: 400;
+				font-family: inherit;
+			}
+			.posts-table a:hover .title,
+			.posts-table a:focus .title {
+				text-decoration: underline;
+				text-underline-offset: 2px;
+				color: var(--color-accent);
+			}
+			.keyboard-hint {
+				position: fixed;
+				bottom: 1em;
+				left: 50%;
+				transform: translateX(-50%);
+				color: var(--color-dim);
+				font-size: 0.7em;
+				opacity: 0.6;
+				font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+				background: rgba(26, 26, 26, 0.8);
+				padding: 0.3em 0.8em;
+				border-radius: 4px;
+				border: 1px solid var(--border);
+				backdrop-filter: blur(8px);
+				z-index: 1000;
+			}
+			.kbd {
+				background: var(--paper-alt);
+				padding: 0.1em 0.3em;
+				border-radius: 2px;
+				border: 1px solid var(--border);
+				font-size: 0.9em;
+				color: var(--ink);
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Posts</h1>
+			<section>
+				<table class="posts-table">
+					<tbody>
+						{
+							posts.map((post, index) => (
+								<tr data-index={index}>
+									<td class="date">
+										<FormattedDate date={post.data.pubDate} />
+									</td>
+									<td>
+										<a href={`/blog/${post.id}/`} class="post-link" tabindex={index === 0 ? "0" : "-1"}>
+											<span class="title">{post.data.title}</span>
+										</a>
+									</td>
+								</tr>
+							))
+						}
+					</tbody>
+				</table>
+			</section>
+		</main>
+		<Footer />
+		
+		<div class="loading-overlay" id="loadingOverlay">
+			<div class="terminal-loader">
+				<span>>  loading</span>
+				<span class="dots"></span>
+			</div>
+		</div>
+		
+		<p class="keyboard-hint">
+			<span class="kbd">↑↓</span> • <span class="kbd">Enter</span> • <span class="kbd">Tab</span> • <span class="kbd">Backspace</span>
+		</p>
+		
+		<script>
+			// Keyboard navigation for blog posts
+			const posts = document.querySelectorAll('.post-link');
+			let currentIndex = 0;
+			
+			// Restore previous selection if returning from a blog post
+			const savedIndex = sessionStorage.getItem('blog-selection-index');
+			if (savedIndex && parseInt(savedIndex) < posts.length) {
+				currentIndex = parseInt(savedIndex);
+			}
+			
+			// Focus the selected post (saved index or first post)
+			if (posts.length > 0) {
+				updateFocus(currentIndex);
+			}
+			
+			function updateFocus(newIndex) {
+				if (newIndex >= 0 && newIndex < posts.length) {
+					posts[currentIndex].tabIndex = -1;
+					currentIndex = newIndex;
+					posts[currentIndex].tabIndex = 0;
+					posts[currentIndex].focus();
+					
+					// Add visual feedback
+					document.querySelectorAll('tr').forEach(tr => tr.classList.remove('keyboard-focus'));
+					posts[currentIndex].closest('tr').classList.add('keyboard-focus');
+				}
+			}
+			
+			document.addEventListener('keydown', (e) => {
+				// Only handle arrow keys if we're focused on a post or not in an input
+				if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+					// Arrow keys only
+					if (e.key === 'ArrowDown') {
+						e.preventDefault();
+						updateFocus(currentIndex + 1);
+					} else if (e.key === 'ArrowUp') {
+						e.preventDefault();
+						updateFocus(currentIndex - 1);
+					}
+					// Enter to navigate
+					else if (e.key === 'Enter' && document.activeElement === posts[currentIndex]) {
+						// Save current selection before navigating
+						sessionStorage.setItem('blog-selection-index', currentIndex.toString());
+						// Show loading animation
+						showLoading();
+						// Navigate with small delay to show animation
+						setTimeout(() => {
+							window.location.href = posts[currentIndex].href;
+						}, 150);
+					}
+					// Backspace goes back
+					else if (e.key === 'Backspace') {
+						e.preventDefault();
+						history.back();
+					}
+				}
+			});
+			
+			// Update current index when tabbing normally
+			posts.forEach((post, index) => {
+				post.addEventListener('focus', () => {
+					currentIndex = index;
+					// Save the current selection whenever focus changes
+					sessionStorage.setItem('blog-selection-index', currentIndex.toString());
+					document.querySelectorAll('tr').forEach(tr => tr.classList.remove('keyboard-focus'));
+					post.closest('tr').classList.add('keyboard-focus');
+				});
+				
+				post.addEventListener('blur', () => {
+					post.closest('tr').classList.remove('keyboard-focus');
+				});
+				
+				// Save selection when clicking on a post
+				post.addEventListener('click', (e) => {
+					e.preventDefault();
+					sessionStorage.setItem('blog-selection-index', index.toString());
+					// Show loading animation
+					showLoading();
+					// Navigate with small delay to show animation
+					setTimeout(() => {
+						window.location.href = post.href;
+					}, 150);
+				});
+			});
+			
+			// Loading animation function
+			function showLoading() {
+				const overlay = document.getElementById('loadingOverlay');
+				overlay.classList.add('active');
+			}
+		</script>
+	</body>
+</html>

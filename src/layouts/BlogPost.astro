@@ -1,0 +1,116 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate } = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			.prose {
+				width: 700px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 2em 1em;
+				color: var(--ink);
+				position: relative;
+			}
+			
+			.title h1::before {
+				content: '> ';
+				color: var(--color-accent);
+				font-weight: 700;
+				font-size: 0.9em;
+				opacity: 0.8;
+				font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+			}
+			.title {
+				margin-bottom: 2em;
+			}
+			.title h1 {
+				margin: 0 0 0.3rem 0;
+				font-size: 1.4em;
+			}
+			.date {
+				color: var(--color-dim);
+				font-size: 0.85em;
+			}
+			.last-updated-on {
+				font-style: italic;
+				margin-top: 0.3em;
+				font-size: 0.85em;
+			}
+			.keyboard-hint {
+				position: fixed;
+				bottom: 1em;
+				left: 50%;
+				transform: translateX(-50%);
+				color: var(--color-dim);
+				font-size: 0.7em;
+				opacity: 0.6;
+				font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+				background: rgba(26, 26, 26, 0.8);
+				padding: 0.3em 0.8em;
+				border-radius: 4px;
+				border: 1px solid var(--border);
+				backdrop-filter: blur(8px);
+				z-index: 1000;
+			}
+			.kbd {
+				background: var(--paper-alt);
+				padding: 0.1em 0.3em;
+				border-radius: 2px;
+				border: 1px solid var(--border);
+				font-size: 0.9em;
+				color: var(--ink);
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<article>
+				<div class="prose">
+					<div class="title">
+						<h1>{title}</h1>
+						<div class="date">
+							<FormattedDate date={pubDate} />
+							{
+								updatedDate && (
+									<div class="last-updated-on">
+										Last updated on <FormattedDate date={updatedDate} />
+									</div>
+								)
+							}
+						</div>
+					</div>
+					<slot />
+				</div>
+			</article>
+		</main>
+		<Footer />
+		
+		<p class="keyboard-hint">
+			<span class="kbd">Backspace</span> • <span class="kbd">Tab</span>
+		</p>
+		
+		<script>
+			// Handle keyboard navigation
+			document.addEventListener('keydown', (e) => {
+				// Backspace goes back
+				if (e.key === 'Backspace' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+					e.preventDefault();
+					history.back();
+				}
+			});
+		</script>
+	</body>
+</html>

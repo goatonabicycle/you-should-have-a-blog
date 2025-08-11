@@ -1,0 +1,149 @@
+---
+import { SITE_TITLE } from "../consts";
+import HomeIcon from "./icons/HomeIcon.astro";
+---
+
+<header>
+	<nav>
+		<div class="nav-container">
+			<div class="home-section">
+				<a href="/" class="home-link">
+					<span class="prompt">>_ </span>
+					<span class="home-text">Type Some Words</span>
+				</a>
+			</div>
+			<div class="nav-links">
+				<a href="/blog" class="blog-link">blog</a>
+			</div>
+		</div>
+	</nav>
+</header>
+<style>
+	header {
+		margin: 0;
+		padding: 0;
+		border-bottom: 1px solid var(--border);
+		background: var(--paper);
+	}
+	
+	nav {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		padding: 1.5em 0;
+	}
+	
+	.nav-container {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+		width: 700px;
+		max-width: calc(100% - 2em);
+		margin: 0 auto;
+		padding: 0 1em;
+		position: relative;
+		/* Match main content padding for perfect alignment */
+		box-sizing: border-box;
+	}
+	
+	.home-section {
+		display: flex;
+		align-items: center;
+	}
+	
+	.home-link {
+		display: flex;
+		align-items: center;
+		gap: 0.2em;
+		text-decoration: none;
+		color: var(--color-accent);
+		transition: all 0.2s ease;
+		font-weight: 600;
+		font-size: 1.1em;
+		position: relative;
+		padding: 0.3em 0.6em;
+		border-radius: 3px;
+		border: 1px solid var(--color-accent);
+		background: rgba(125, 211, 252, 0.05);
+	}
+	
+	.home-link:hover {
+		color: var(--ink);
+		background: rgba(125, 211, 252, 0.1);
+		border-color: var(--color-accent);
+	}
+	
+	.prompt {
+		color: var(--color-accent);
+		font-weight: 700;
+		transition: all 0.2s ease;
+		opacity: 1;
+		transform: translateX(0);
+	}
+	
+	.home-link:hover .prompt {
+		color: var(--ink);
+	}
+	
+	.home-text {
+		font-weight: 600;
+		transition: all 0.2s ease;
+		position: relative;
+	}
+	
+	.nav-links {
+		display: flex;
+		align-items: center;
+	}
+	
+	.blog-link {
+		color: var(--ink);
+		text-decoration: none;
+		font-size: 1.1em;
+		font-weight: 600;
+		padding: 0.3em 0.6em;
+		border-radius: 3px;
+		transition: all 0.2s ease;
+		border: 1px solid transparent;
+		position: relative;
+	}
+	
+	.blog-link:hover {
+		color: var(--color-accent);
+		background: rgba(125, 211, 252, 0.05);
+		border-color: var(--color-accent);
+	}
+	
+	.blog-link::before {
+		content: '> ';
+		color: var(--color-accent);
+		font-weight: 700;
+		opacity: 0;
+		transition: all 0.2s ease;
+		transform: translateX(-5px);
+	}
+	
+	.blog-link:hover::before {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	
+	/* Terminal cursor animation */
+	.nav-container::after {
+		content: '_';
+		color: var(--color-accent);
+		animation: blink 1.5s infinite;
+		margin-left: 0.3em;
+		opacity: 0.7;
+		position: absolute;
+		right: 0.5em;
+	}
+	
+	@keyframes blink {
+		0%, 50% { opacity: 0.7; }
+		51%, 100% { opacity: 0; }
+	}
+	
+</style>

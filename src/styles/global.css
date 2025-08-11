@@ -1,0 +1,205 @@
+:root {
+	--ink: #f1f0ec;
+	--paper: #1a1a1a;
+	--paper-alt: #262626;
+	--accent: #999;
+	--border: #333;
+	--color-accent: #7dd3fc;  /* light blue */
+	--color-secondary: #93c5fd; /* slightly darker blue */
+	--color-dim: #888;
+}
+
+@font-face {
+	font-family: "Atkinson";
+	src: url("/fonts/atkinson-regular.woff") format("woff");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Atkinson";
+	src: url("/fonts/atkinson-bold.woff") format("woff");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+html {
+	background: var(--paper);
+	background-image: 
+		radial-gradient(circle at 20% 80%, #ffffff01 0.5px, transparent 0.5px);
+	background-size: 12px 12px;
+	background-attachment: fixed;
+	min-height: 100vh;
+}
+
+body {
+	font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	background: transparent;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	color: var(--ink);
+	font-size: 14px;
+	line-height: 1.6;
+	min-height: 100vh;
+}
+
+main {
+	width: 700px;
+	max-width: calc(100% - 2em);
+	margin: auto;
+	padding: 2em 1em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 1.5rem 0 0.75rem 0;
+	color: var(--ink);
+	line-height: 1.2;
+	font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+	font-weight: 600;
+}
+
+h1 {
+	font-size: 1.4em;
+	font-weight: 700;
+	border-bottom: 1px solid var(--border);
+	padding-bottom: 0.3rem;
+}
+h2 {
+	font-size: 1.2em;
+}
+h3 {
+	font-size: 1.1em;
+}
+h4 {
+	font-size: 1em;
+}
+h5 {
+	font-size: 0.9em;
+}
+
+strong,
+b {
+	font-weight: 700;
+}
+
+a {
+	color: var(--ink);
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 2px;
+	transition: color 0.2s ease;
+}
+a:hover {
+	color: var(--color-accent);
+	text-decoration-color: var(--color-accent);
+}
+
+p {
+	margin-bottom: 1em;
+}
+.prose p {
+	margin-bottom: 1em;
+}
+
+textarea {
+	width: 100%;
+	font-size: 16px;
+}
+input {
+	font-size: 16px;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+table th,
+table td {
+	padding: 0.5em;
+	border: 1px solid var(--border);
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	border: 1px solid var(--border);
+	padding: 4px;
+	background: var(--paper-alt);
+	margin: 1em 0;
+	display: block;
+}
+
+video {
+	max-width: 100%;
+	height: auto;
+	border: 1px solid var(--border);
+	background: var(--paper-alt);
+	margin: 1em 0;
+	display: block;
+}
+
+code {
+	padding: 2px 4px;
+	background-color: var(--paper-alt);
+	font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+	font-size: 0.9em;
+}
+pre {
+	padding: 1em;
+	background: var(--paper-alt);
+	border-left: 2px solid var(--color-secondary);
+	overflow-x: auto;
+}
+pre > code {
+	all: unset;
+}
+
+blockquote {
+	border-left: 2px solid var(--color-secondary);
+	padding: 0 0 0 20px;
+	margin: 1.5em 0;
+	font-style: italic;
+	color: var(--accent);
+}
+
+hr {
+	border: none;
+	border-top: 1px solid var(--border);
+	margin: 2em 0;
+}
+
+@media (max-width: 720px) {
+	body {
+		font-size: 13px;
+	}
+	main {
+		padding: 1.5em 1em;
+	}
+}
+
+.sr-only {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+	clip: rect(1px 1px 1px 1px);
+	/* maybe deprecated but we need to support legacy browsers */
+	clip: rect(1px, 1px, 1px, 1px);
+	/* modern browsers, clip-path works inwards from each corner */
+	clip-path: inset(50%);
+	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
+	white-space: nowrap;
+}
