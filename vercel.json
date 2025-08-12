@@ -1,7 +1,3 @@
 {
-  "functions": {
-    "src/pages/**/*.astro": {
-      "runtime": "@vercel/node@22"
-    }
-  }
+  "buildCommand": "npm run build"
 }
