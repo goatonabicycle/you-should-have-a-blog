@@ -16,10 +16,6 @@ const posts = (await getCollection("blog")).sort(
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
-			h1 {
-				margin-bottom: 1.5rem;
-				font-size: 1.2em;
-			}
 			.posts-table {
 				width: 100%;
 				border-spacing: 0;
@@ -38,10 +34,7 @@ const posts = (await getCollection("blog")).sort(
 				border: none;
 				vertical-align: baseline;
 			}
-			.posts-table {
-				margin-left: 1.5em;
-			}
-			
+
 			.posts-table td:first-child {
 				width: 90px;
 				padding-right: 1.5em;
@@ -54,20 +47,20 @@ const posts = (await getCollection("blog")).sort(
 				outline: none;
 				position: relative;
 			}
-			
+
 			.posts-table a::before {
-				content: '> ';
+				content: "> ";
 				color: var(--color-accent);
 				font-weight: 700;
 				font-size: 0.9em;
 				opacity: 0;
 				transition: opacity 0.2s ease;
 			}
-			
+
 			.posts-table a:focus::before {
 				opacity: 1;
 			}
-			
+
 			/* Loading animation */
 			.loading-overlay {
 				position: fixed;
@@ -84,35 +77,44 @@ const posts = (await getCollection("blog")).sort(
 				pointer-events: none;
 				transition: opacity 0.3s ease;
 			}
-			
+
 			.loading-overlay.active {
 				opacity: 1;
 				pointer-events: all;
 			}
-			
+
 			.terminal-loader {
-				font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+				font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code",
+					"Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 				color: var(--color-accent);
 				font-size: 1em;
 				display: flex;
 				align-items: center;
 				gap: 0.5em;
 			}
-			
+
 			.dots {
 				display: inline-block;
 			}
-			
+
 			.dots::after {
-				content: '';
+				content: "";
 				animation: dots 1.5s infinite;
 			}
-			
+
 			@keyframes dots {
-				0% { content: ''; }
-				33% { content: '.'; }
-				66% { content: '..'; }
-				100% { content: '...'; }
+				0% {
+					content: "";
+				}
+				33% {
+					content: ".";
+				}
+				66% {
+					content: "..";
+				}
+				100% {
+					content: "...";
+				}
 			}
 			.posts-table a:focus {
 				color: var(--color-accent);
@@ -142,7 +144,8 @@ const posts = (await getCollection("blog")).sort(
 				color: var(--color-dim);
 				font-size: 0.7em;
 				opacity: 0.6;
-				font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+				font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code",
+					"Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 				background: rgba(26, 26, 26, 0.8);
 				padding: 0.3em 0.8em;
 				border-radius: 4px;
@@ -174,7 +177,11 @@ const posts = (await getCollection("blog")).sort(
 										<FormattedDate date={post.data.pubDate} />
 									</td>
 									<td>
-										<a href={`/blog/${post.id}/`} class="post-link" tabindex={index === 0 ? "0" : "-1"}>
+										<a
+											href={`/blog/${post.id}/`}
+											class="post-link"
+											tabindex={index === 0 ? "0" : "-1"}
+										>
 											<span class="title">{post.data.title}</span>
 										</a>
 									</td>
@@ -186,62 +193,75 @@ const posts = (await getCollection("blog")).sort(
 			</section>
 		</main>
 		<Footer />
-		
+
 		<div class="loading-overlay" id="loadingOverlay">
 			<div class="terminal-loader">
-				<span>>  loading</span>
+				<span>> loading</span>
 				<span class="dots"></span>
 			</div>
 		</div>
-		
+
 		<p class="keyboard-hint">
-			<span class="kbd">↑↓</span> • <span class="kbd">Enter</span> • <span class="kbd">Tab</span> • <span class="kbd">Backspace</span>
+			<span class="kbd">↑↓</span> • <span class="kbd">Enter</span> • <span
+				class="kbd">Tab</span
+			> • <span class="kbd">Backspace</span>
 		</p>
-		
+
 		<script>
 			// Keyboard navigation for blog posts
-			const posts = document.querySelectorAll('.post-link');
+			const posts = document.querySelectorAll(".post-link");
 			let currentIndex = 0;
-			
+
 			// Restore previous selection if returning from a blog post
-			const savedIndex = sessionStorage.getItem('blog-selection-index');
+			const savedIndex = sessionStorage.getItem("blog-selection-index");
 			if (savedIndex && parseInt(savedIndex) < posts.length) {
 				currentIndex = parseInt(savedIndex);
 			}
-			
+
 			// Focus the selected post (saved index or first post)
 			if (posts.length > 0) {
 				updateFocus(currentIndex);
 			}
-			
+
 			function updateFocus(newIndex) {
 				if (newIndex >= 0 && newIndex < posts.length) {
 					posts[currentIndex].tabIndex = -1;
 					currentIndex = newIndex;
 					posts[currentIndex].tabIndex = 0;
 					posts[currentIndex].focus();
-					
+
 					// Add visual feedback
-					document.querySelectorAll('tr').forEach(tr => tr.classList.remove('keyboard-focus'));
-					posts[currentIndex].closest('tr').classList.add('keyboard-focus');
+					document
+						.querySelectorAll("tr")
+						.forEach((tr) => tr.classList.remove("keyboard-focus"));
+					posts[currentIndex].closest("tr").classList.add("keyboard-focus");
 				}
 			}
-			
-			document.addEventListener('keydown', (e) => {
+
+			document.addEventListener("keydown", (e) => {
 				// Only handle arrow keys if we're focused on a post or not in an input
-				if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+				if (
+					document.activeElement.tagName !== "INPUT" &&
+					document.activeElement.tagName !== "TEXTAREA"
+				) {
 					// Arrow keys only
-					if (e.key === 'ArrowDown') {
+					if (e.key === "ArrowDown") {
 						e.preventDefault();
 						updateFocus(currentIndex + 1);
-					} else if (e.key === 'ArrowUp') {
+					} else if (e.key === "ArrowUp") {
 						e.preventDefault();
 						updateFocus(currentIndex - 1);
 					}
 					// Enter to navigate
-					else if (e.key === 'Enter' && document.activeElement === posts[currentIndex]) {
+					else if (
+						e.key === "Enter" &&
+						document.activeElement === posts[currentIndex]
+					) {
 						// Save current selection before navigating
-						sessionStorage.setItem('blog-selection-index', currentIndex.toString());
+						sessionStorage.setItem(
+							"blog-selection-index",
+							currentIndex.toString(),
+						);
 						// Show loading animation
 						showLoading();
 						// Navigate with small delay to show animation
@@ -250,31 +270,36 @@ const posts = (await getCollection("blog")).sort(
 						}, 150);
 					}
 					// Backspace goes back
-					else if (e.key === 'Backspace') {
+					else if (e.key === "Backspace") {
 						e.preventDefault();
 						history.back();
 					}
 				}
 			});
-			
+
 			// Update current index when tabbing normally
 			posts.forEach((post, index) => {
-				post.addEventListener('focus', () => {
+				post.addEventListener("focus", () => {
 					currentIndex = index;
 					// Save the current selection whenever focus changes
-					sessionStorage.setItem('blog-selection-index', currentIndex.toString());
-					document.querySelectorAll('tr').forEach(tr => tr.classList.remove('keyboard-focus'));
-					post.closest('tr').classList.add('keyboard-focus');
+					sessionStorage.setItem(
+						"blog-selection-index",
+						currentIndex.toString(),
+					);
+					document
+						.querySelectorAll("tr")
+						.forEach((tr) => tr.classList.remove("keyboard-focus"));
+					post.closest("tr").classList.add("keyboard-focus");
 				});
-				
-				post.addEventListener('blur', () => {
-					post.closest('tr').classList.remove('keyboard-focus');
+
+				post.addEventListener("blur", () => {
+					post.closest("tr").classList.remove("keyboard-focus");
 				});
-				
+
 				// Save selection when clicking on a post
-				post.addEventListener('click', (e) => {
+				post.addEventListener("click", (e) => {
 					e.preventDefault();
-					sessionStorage.setItem('blog-selection-index', index.toString());
+					sessionStorage.setItem("blog-selection-index", index.toString());
 					// Show loading animation
 					showLoading();
 					// Navigate with small delay to show animation
@@ -283,11 +308,11 @@ const posts = (await getCollection("blog")).sort(
 					}, 150);
 				});
 			});
-			
+
 			// Loading animation function
 			function showLoading() {
-				const overlay = document.getElementById('loadingOverlay');
-				overlay.classList.add('active');
+				const overlay = document.getElementById("loadingOverlay");
+				overlay.classList.add("active");
 			}
 		</script>
 	</body>

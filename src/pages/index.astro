@@ -20,50 +20,50 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 				border-radius: 2px;
 				transition: all 0.2s ease;
 			}
-			
+
 			.posts-link::before {
-				content: '> ';
+				content: "> ";
 				color: var(--color-accent);
 				font-weight: 700;
 				opacity: 0;
 				transition: opacity 0.2s ease;
 			}
-			
+
 			.posts-link:focus {
 				background: rgba(125, 211, 252, 0.05);
 				color: var(--color-accent);
 				text-decoration: underline;
 				text-decoration-color: var(--color-accent);
 			}
-			
+
 			.posts-link:focus::before {
 				opacity: 1;
 			}
-			
+
 			.posts-link:hover {
 				color: var(--color-accent);
 				text-decoration: underline;
 				text-decoration-color: var(--color-accent);
 			}
-			
+
 			.posts-link:hover::before {
 				opacity: 0.6;
 			}
-			
+
 			.posts-link::after {
-				content: '↵';
+				content: "↵";
 				margin-left: 0.5em;
 				color: var(--color-dim);
 				font-size: 0.8em;
 				opacity: 0.7;
 				transition: opacity 0.2s ease;
 			}
-			
+
 			.posts-link:focus::after {
 				color: var(--color-accent);
 				opacity: 1;
 			}
-			
+
 			.keyboard-hint {
 				position: fixed;
 				bottom: 1em;
@@ -72,14 +72,15 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 				color: var(--color-dim);
 				font-size: 0.7em;
 				opacity: 0.6;
-				font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+				font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code",
+					"Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 				background: rgba(26, 26, 26, 0.8);
 				padding: 0.3em 0.8em;
 				border-radius: 4px;
 				border: 1px solid var(--border);
 				backdrop-filter: blur(8px);
 			}
-			
+
 			.kbd {
 				background: var(--paper-alt);
 				padding: 0.1em 0.3em;
@@ -95,36 +96,47 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 		<main>
 			<h1>Hello!</h1>
 			<p>I am Rowan.</p>
-			<p>I write about things I find interesting: <a href="/blog" class="posts-link" id="mainLink">Posts</a></p>
+			<p>
+				I write about things I find interesting: <a
+					href="/blog"
+					class="posts-link"
+					id="mainLink">Posts</a>
+			</p>
 		</main>
 
 		<Footer />
-		
+
 		<p class="keyboard-hint">
-			<span class="kbd">Enter</span> • <span class="kbd">Tab</span> • <span class="kbd">↑↓</span> • <span class="kbd">Backspace</span>
+			<span class="kbd">Enter</span> • <span class="kbd">Tab</span> • <span
+				class="kbd">↑↓</span
+			> • <span class="kbd">Backspace</span>
 		</p>
-		
+
 		<script>
 			// Auto-focus the main link and handle Enter key
-			const mainLink = document.getElementById('mainLink');
-			
+			const mainLink = document.getElementById("mainLink");
+
 			// Focus the link by default
 			mainLink.focus();
-			
+
 			// Handle keyboard navigation
-			document.addEventListener('keydown', (e) => {
+			document.addEventListener("keydown", (e) => {
 				// Enter key navigates to posts
-				if (e.key === 'Enter' && document.activeElement !== mainLink) {
-					window.location.href = '/blog';
+				if (e.key === "Enter" && document.activeElement !== mainLink) {
+					window.location.href = "/blog";
 				}
-				
+
 				// Arrow key navigation
-				if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+				if (e.key === "ArrowDown" || e.key === "ArrowUp") {
 					mainLink.focus();
 				}
-				
+
 				// Backspace goes back
-				if (e.key === 'Backspace' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+				if (
+					e.key === "Backspace" &&
+					document.activeElement.tagName !== "INPUT" &&
+					document.activeElement.tagName !== "TEXTAREA"
+				) {
 					e.preventDefault();
 					history.back();
 				}
