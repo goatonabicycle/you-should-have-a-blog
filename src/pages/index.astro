@@ -1,8 +1,33 @@
 ---
+import { getCollection } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
+import FormattedDate from "../components/FormattedDate.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+
+const posts = (await getCollection("blog")).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const latestPost = posts[0];
+
+let latestPostStats = { words: 0, vowels: 0, consonants: 0, readingTime: 0 };
+if (latestPost) {
+	const plainText = latestPost.body || "";
+	const words = plainText.split(/\s+/).filter((word) => word.length > 0);
+	latestPostStats.words = words.length;
+
+	const letters = plainText.toLowerCase().replace(/[^a-z]/g, "");
+	latestPostStats.vowels = (letters.match(/[aeiou]/g) || []).length;
+	latestPostStats.consonants = (
+		letters.match(/[bcdfghjklmnpqrstvwxyz]/g) || []
+	).length;
+
+	latestPostStats.readingTime = Math.max(
+		1,
+		Math.round(latestPostStats.words / 200),
+	);
+}
 ---
 
 <!doctype html>
@@ -64,30 +89,37 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 				opacity: 1;
 			}
 
-			.keyboard-hint {
-				position: fixed;
-				bottom: 1em;
-				left: 50%;
-				transform: translateX(-50%);
-				color: var(--color-dim);
-				font-size: 0.7em;
-				opacity: 0.6;
-				font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code",
-					"Fira Mono", "Droid Sans Mono", "Courier New", monospace;
-				background: rgba(26, 26, 26, 0.8);
-				padding: 0.3em 0.8em;
-				border-radius: 4px;
-				border: 1px solid var(--border);
-				backdrop-filter: blur(8px);
+			.social-links {
+				margin-top: 1.5em;
 			}
 
-			.kbd {
+			.latest-post {
+				margin-top: 2em;
+				padding: 1em;
 				background: var(--paper-alt);
-				padding: 0.1em 0.3em;
-				border-radius: 2px;
+				border-radius: 4px;
 				border: 1px solid var(--border);
-				font-size: 0.9em;
+			}
+
+			.latest-post h2 {
+				margin-top: 0;
+				font-size: 1em;
+				color: var(--color-accent);
+			}
+
+			.latest-post-link {
+				text-decoration: none;
 				color: var(--ink);
+			}
+
+			.latest-post-link:hover {
+				color: var(--color-accent);
+				text-decoration: underline;
+			}
+
+			.latest-post-date {
+				color: var(--color-dim);
+				font-size: 0.85em;
 			}
 		</style>
 	</head>
@@ -100,47 +132,39 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 				I write about things I find interesting: <a
 					href="/blog"
 					class="posts-link"
-					id="mainLink">Posts</a>
+					id="mainLink">Posts</a
+				>
 			</p>
-		</main>
 
+			{
+				latestPost && (
+					<div class="latest-post">
+						<h2>Latest Post</h2>
+						<a
+							href={`/blog/${latestPost.id}/`}
+							class="latest-post-link"
+							id="latestPostLink"
+						>
+							<strong>{latestPost.data.title}</strong>
+						</a>
+						<div class="latest-post-date">
+							<FormattedDate
+								date={latestPost.data.pubDate}
+								showDaysAgo={true}
+							/>{" "}
+							· {latestPostStats.words} words
+						</div>
+					</div>
+				)
+			}
+		</main>
 		<Footer />
 
-		<p class="keyboard-hint">
-			<span class="kbd">Enter</span> • <span class="kbd">Tab</span> • <span
-				class="kbd">↑↓</span
-			> • <span class="kbd">Backspace</span>
-		</p>
-
 		<script>
-			// Auto-focus the main link and handle Enter key
 			const mainLink = document.getElementById("mainLink");
-
-			// Focus the link by default
-			mainLink.focus();
-
-			// Handle keyboard navigation
-			document.addEventListener("keydown", (e) => {
-				// Enter key navigates to posts
-				if (e.key === "Enter" && document.activeElement !== mainLink) {
-					window.location.href = "/blog";
-				}
-
-				// Arrow key navigation
-				if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-					mainLink.focus();
-				}
-
-				// Backspace goes back
-				if (
-					e.key === "Backspace" &&
-					document.activeElement.tagName !== "INPUT" &&
-					document.activeElement.tagName !== "TEXTAREA"
-				) {
-					e.preventDefault();
-					history.back();
-				}
-			});
+			if (mainLink) {
+				mainLink.focus();
+			}
 		</script>
 	</body>
 </html>

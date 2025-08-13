@@ -1,20 +1,34 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import BlogPost from "../../layouts/BlogPost.astro";
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
+	const posts = await getCollection("blog");
 	return posts.map((post) => ({
 		params: { slug: post.id },
 		props: post,
 	}));
 }
-type Props = CollectionEntry<'blog'>;
+type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
 const { Content } = await render(post);
+
+const plainText = post.body || "";
+const words = plainText.split(/\s+/).filter((word) => word.length > 0);
+const wordCount = words.length;
+const letters = plainText.toLowerCase().replace(/[^a-z]/g, "");
+const vowelCount = (letters.match(/[aeiou]/g) || []).length;
+const consonantCount = (letters.match(/[bcdfghjklmnpqrstvwxyz]/g) || []).length;
+const sentenceCount = (plainText.match(/[.!?]+/g) || []).length;
 ---
 
-<BlogPost {...post.data}>
+<BlogPost
+	{...post.data}
+	wordCount={wordCount}
+	vowelCount={vowelCount}
+	consonantCount={consonantCount}
+	sentenceCount={sentenceCount}
+>
 	<Content />
 </BlogPost>

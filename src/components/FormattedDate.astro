@@ -1,17 +1,24 @@
 ---
 interface Props {
 	date: Date;
+	showDaysAgo?: boolean;
 }
 
-const { date } = Astro.props;
+const { date, showDaysAgo = false } = Astro.props;
+
+const daysAgo = Math.floor((new Date().getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+const daysAgoText = daysAgo === 0 ? 'today' : daysAgo === 1 ? 'yesterday' : `${daysAgo} days ago`;
 ---
 
 <time datetime={date.toISOString()}>
 	{
 		date.toLocaleDateString('en-us', {
 			year: 'numeric',
-			month: 'short',
+			month: 'long',
 			day: 'numeric',
 		})
 	}
+	{showDaysAgo && (
+		<span style="color: var(--color-dim); margin-left: 0.5em;">({daysAgoText})</span>
+	)}
 </time>
