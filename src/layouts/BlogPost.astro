@@ -21,12 +21,13 @@ const {
 	vowelCount,
 	consonantCount,
 	sentenceCount,
+	socialImage,
 } = Astro.props;
 ---
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead title={title} description={description} image={socialImage} />
 		<style>
 			.prose {
 				color: var(--ink);
