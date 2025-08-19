@@ -15,7 +15,7 @@ Am I okay with saying you should have a blog? No. But should you type some words
 
 Other than some silly little tweets and teenage Facebook cringe I've never really used public forums much. I kind of had a blog called [Grug Listen Music](https://www.gruglistenmusic.com/) but procrastination won that battle. Grug was detached from me though. It wasn't "me" writing the words and sharing the thoughts. It was a caveman persona reviewing underground albums in broken English. I still heavily feel like I should return to that. It was lots of fun, especially meeting awesome people on Twitter. But Twitter now feels like a house not worth visiting. It’s sad, but that time is now over.
 
-Creating anything contains a certain amount of vanity. A vanity needed to share the things you made with others. To write in long post form seems even more egregious. You expect me to read those 500 words? Come on… However, I would actively enjoy reading what you’ve written, whoever you are. It is an absolute gift getting recommendations and if those recommendations are things you’ve made, all the better!
+Creating anything contains a certain amount of vanity. A vanity needed to share the things you made with others. To write in long post form seems even more egregious. You expect me to read those 615 words? Come on… However, I would actively enjoy reading what you’ve written, whoever you are. It is an absolute gift getting recommendations and if those recommendations are things you’ve made, all the better!
 
 I expect this will allow me moments to think more clearly about whatever it is I'm writing. Even if these thoughts end up only being scraped by 5 LLM bots and read by my partner, that's fine!
 
