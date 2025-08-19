@@ -17,12 +17,15 @@ const post = Astro.props;
 const { Content } = await render(post);
 
 const plainText = post.body || "";
-const words = plainText.split(/\s+/).filter((word) => word.length > 0);
+const cleanText = plainText
+	.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+	.replace(/[*#_`]/g, "");
+const words = cleanText.split(/\s+/).filter((word) => word.length > 0);
 const wordCount = words.length;
-const letters = plainText.toLowerCase().replace(/[^a-z]/g, "");
+const letters = cleanText.toLowerCase().replace(/[^a-z]/g, "");
 const vowelCount = (letters.match(/[aeiou]/g) || []).length;
 const consonantCount = (letters.match(/[bcdfghjklmnpqrstvwxyz]/g) || []).length;
-const sentenceCount = (plainText.match(/[.!?]+/g) || []).length;
+const sentenceCount = (cleanText.match(/[.!?]+/g) || []).length;
 ---
 
 <BlogPost
