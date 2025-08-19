@@ -11,7 +11,7 @@ const posts = (await getCollection("blog"))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const latestPost = posts[0];
 
-let latestPostStats = { words: 0, vowels: 0, consonants: 0, readingTime: 0 };
+let latestPostStats = { words: 0, vowels: 0, consonants: 0 };
 if (latestPost) {
 	const plainText = latestPost.body || "";
 	const words = plainText.split(/\s+/).filter((word) => word.length > 0);
@@ -22,11 +22,6 @@ if (latestPost) {
 	latestPostStats.consonants = (
 		letters.match(/[bcdfghjklmnpqrstvwxyz]/g) || []
 	).length;
-
-	latestPostStats.readingTime = Math.max(
-		1,
-		Math.round(latestPostStats.words / 200),
-	);
 }
 ---
 
