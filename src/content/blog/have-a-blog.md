@@ -1,6 +1,6 @@
 ---
 title: 'Have a Blog'
-description: 'empty'
+description: 'The most obvious blog post in the world.'
 pubDate: 'Aug 20 2025'
 draft: false
 ---

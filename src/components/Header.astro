@@ -8,7 +8,7 @@ import HomeIcon from "./icons/HomeIcon.astro";
 		<div class="nav-container">
 			<div class="home-section">
 				<a href="/" class="home-link">
-					<span class="prompt">>_ </span>
+					<span class="prompt">></span>
 					<span class="home-text">Type Some Words</span>
 				</a>
 			</div>
@@ -25,7 +25,7 @@ import HomeIcon from "./icons/HomeIcon.astro";
 		border-bottom: 1px solid var(--border);
 		background: var(--paper);
 	}
-	
+
 	nav {
 		display: flex;
 		justify-content: center;
@@ -33,24 +33,25 @@ import HomeIcon from "./icons/HomeIcon.astro";
 		width: 100%;
 		padding: 1.5em 0;
 	}
-	
+
 	.nav-container {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+		font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono",
+			"Droid Sans Mono", "Courier New", monospace;
 		width: 600px;
 		max-width: calc(100% - 2em);
 		margin: 0 auto;
 		padding: 0 1em;
 		position: relative;
 	}
-	
+
 	.home-section {
 		display: flex;
 		align-items: center;
 	}
-	
+
 	.home-link {
 		display: flex;
 		align-items: center;
@@ -66,13 +67,13 @@ import HomeIcon from "./icons/HomeIcon.astro";
 		border: 1px solid var(--color-accent);
 		background: rgba(125, 211, 252, 0.05);
 	}
-	
+
 	.home-link:hover {
 		color: var(--ink);
 		background: rgba(125, 211, 252, 0.1);
 		border-color: var(--color-accent);
 	}
-	
+
 	.prompt {
 		color: var(--color-accent);
 		font-weight: 700;
@@ -80,22 +81,22 @@ import HomeIcon from "./icons/HomeIcon.astro";
 		opacity: 1;
 		transform: translateX(0);
 	}
-	
+
 	.home-link:hover .prompt {
 		color: var(--ink);
 	}
-	
+
 	.home-text {
 		font-weight: 600;
 		transition: all 0.2s ease;
 		position: relative;
 	}
-	
+
 	.nav-links {
 		display: flex;
 		align-items: center;
 	}
-	
+
 	.blog-link {
 		color: var(--ink);
 		text-decoration: none;
@@ -107,30 +108,30 @@ import HomeIcon from "./icons/HomeIcon.astro";
 		border: 1px solid transparent;
 		position: relative;
 	}
-	
+
 	.blog-link:hover {
 		color: var(--color-accent);
 		background: rgba(125, 211, 252, 0.05);
 		border-color: var(--color-accent);
 	}
-	
+
 	.blog-link::before {
-		content: '> ';
+		content: "> ";
 		color: var(--color-accent);
 		font-weight: 700;
 		opacity: 0;
 		transition: all 0.2s ease;
 		transform: translateX(-5px);
 	}
-	
+
 	.blog-link:hover::before {
 		opacity: 1;
 		transform: translateX(0);
 	}
-	
+
 	/* Terminal cursor animation */
 	.nav-container::after {
-		content: '_';
+		content: "_";
 		color: var(--color-accent);
 		animation: blink 1.5s infinite;
 		margin-left: 0.3em;
@@ -138,10 +139,15 @@ import HomeIcon from "./icons/HomeIcon.astro";
 		position: absolute;
 		right: 0.5em;
 	}
-	
+
 	@keyframes blink {
-		0%, 50% { opacity: 0.7; }
-		51%, 100% { opacity: 0; }
+		0%,
+		50% {
+			opacity: 0.7;
+		}
+		51%,
+		100% {
+			opacity: 0;
+		}
 	}
-	
 </style>

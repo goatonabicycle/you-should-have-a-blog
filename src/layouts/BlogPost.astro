@@ -27,7 +27,13 @@ const {
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} image={socialImage} />
+		<BaseHead 
+			title={title} 
+			description={description} 
+			image={socialImage} 
+			ogType="article" 
+			articleDate={pubDate} 
+		/>
 		<style>
 			.prose {
 				color: var(--ink);
