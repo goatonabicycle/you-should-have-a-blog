@@ -6,19 +6,42 @@ interface Props {
 
 const { date, showDaysAgo = false } = Astro.props;
 
-const daysAgo = Math.floor((new Date().getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
-const daysAgoText = daysAgo < 0 ? 'in the future' : daysAgo === 0 ? 'today' : daysAgo === 1 ? 'yesterday' : `${daysAgo} days ago`;
+const normalizeToUTCMidnight = (d: Date) => {
+	const utcDate = new Date(
+		Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()),
+	);
+	return utcDate;
+};
+
+const todayUTC = normalizeToUTCMidnight(new Date());
+const dateUTC = normalizeToUTCMidnight(date);
+
+const daysAgo = Math.floor(
+	(todayUTC.getTime() - dateUTC.getTime()) / (1000 * 60 * 60 * 24),
+);
+const daysAgoText =
+	daysAgo < 0
+		? "in the future"
+		: daysAgo === 0
+			? "today"
+			: daysAgo === 1
+				? "yesterday"
+				: `${daysAgo} days ago`;
 ---
 
 <time datetime={date.toISOString()}>
 	{
-		date.toLocaleDateString('en-us', {
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric',
+		date.toLocaleDateString("en-us", {
+			year: "numeric",
+			month: "long",
+			day: "numeric",
 		})
 	}
-	{showDaysAgo && (
-		<span style="color: var(--color-dim); margin-left: 0.5em;">({daysAgoText})</span>
-	)}
+	{
+		showDaysAgo && (
+			<span style="color: var(--color-dim); margin-left: 0.5em;">
+				({daysAgoText})
+			</span>
+		)
+	}
 </time>
