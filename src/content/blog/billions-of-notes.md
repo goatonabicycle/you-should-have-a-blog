@@ -7,13 +7,15 @@ draft: true
 
 Billions of Notes is a website. It's live right now on the internet. 
 
+I'm not happy about it. There's so much I want to do and improve.
+
 It tries to answer the question of "What if I just need a couple of random notes?" but only if it's followed by "... and I want to visualize what they'd look like on a fretboard?"
 
 It also has a scale finder! You can put some notes into it and it tells you which scales those notes are in. Scales are just groups of notes that give a certain vibe.
 
 It also has a normal fretboard! This is useful for when you just want to noodle in a particular scale of a particular key. For example
 
-It's an incredible amount of fun to make and I intend on expanding on it for a long long time. 
+It's an incredible amount of fun to make and I intend on expanding on it for a long, long time. 
 
 At some point I'll need to decide on when to make it "live". This basically means sharing it with other actual humans in a non "feedback pls" type of way. 
 
