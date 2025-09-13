@@ -1,6 +1,5 @@
 ---
 import { SITE_TITLE } from "../consts";
-import HomeIcon from "./icons/HomeIcon.astro";
 ---
 
 <header>
@@ -8,12 +7,13 @@ import HomeIcon from "./icons/HomeIcon.astro";
 		<div class="nav-container">
 			<div class="home-section">
 				<a href="/" class="home-link">
-					<span class="prompt">></span>
-					<span class="home-text">Type Some Words</span>
+					<span class="prompt">~</span>
+					<span class="home-text">typesomewords</span>
 				</a>
 			</div>
 			<div class="nav-links">
-				<a href="/blog" class="blog-link">blog</a>
+				<a href="/blog" class="nav-link">posts</a>
+				<a href="/rss.xml" class="nav-link" target="_blank">rss</a>
 			</div>
 		</div>
 	</nav>
@@ -55,35 +55,26 @@ import HomeIcon from "./icons/HomeIcon.astro";
 	.home-link {
 		display: flex;
 		align-items: center;
-		gap: 0.2em;
+		gap: 0.3em;
 		text-decoration: none;
 		color: var(--color-accent);
 		transition: all 0.2s ease;
 		font-weight: 600;
-		font-size: 1.1em;
+		font-size: 1em;
 		position: relative;
-		padding: 0.3em 0.6em;
-		border-radius: 3px;
-		border: 1px solid var(--color-accent);
-		background: rgba(125, 211, 252, 0.05);
+		padding: 0.2em 0.4em;
+		border-radius: 2px;
 	}
 
 	.home-link:hover {
 		color: var(--ink);
-		background: rgba(125, 211, 252, 0.1);
-		border-color: var(--color-accent);
+		background: rgba(125, 211, 252, 0.05);
 	}
 
 	.prompt {
 		color: var(--color-accent);
 		font-weight: 700;
 		transition: all 0.2s ease;
-		opacity: 1;
-		transform: translateX(0);
-	}
-
-	.home-link:hover .prompt {
-		color: var(--ink);
 	}
 
 	.home-text {
@@ -95,59 +86,29 @@ import HomeIcon from "./icons/HomeIcon.astro";
 	.nav-links {
 		display: flex;
 		align-items: center;
+		gap: 1em;
 	}
 
-	.blog-link {
+	.nav-link {
 		color: var(--ink);
 		text-decoration: none;
-		font-size: 1.1em;
-		font-weight: 600;
-		padding: 0.3em 0.6em;
-		border-radius: 3px;
+		font-size: 1em;
+		font-weight: 400;
+		padding: 0.2em 0.4em;
+		border-radius: 2px;
 		transition: all 0.2s ease;
-		border: 1px solid transparent;
 		position: relative;
 	}
 
-	.blog-link:hover {
+	.nav-link:hover {
 		color: var(--color-accent);
 		background: rgba(125, 211, 252, 0.05);
-		border-color: var(--color-accent);
 	}
 
-	.blog-link::before {
-		content: "> ";
-		color: var(--color-accent);
-		font-weight: 700;
-		opacity: 0;
-		transition: all 0.2s ease;
-		transform: translateX(-5px);
+	.nav-link::before {
+		content: "/";
+		color: var(--color-dim);
+		margin-right: 0.2em;
 	}
 
-	.blog-link:hover::before {
-		opacity: 1;
-		transform: translateX(0);
-	}
-
-	/* Terminal cursor animation */
-	.nav-container::after {
-		content: "_";
-		color: var(--color-accent);
-		animation: blink 1.5s infinite;
-		margin-left: 0.3em;
-		opacity: 0.7;
-		position: absolute;
-		right: 0.5em;
-	}
-
-	@keyframes blink {
-		0%,
-		50% {
-			opacity: 0.7;
-		}
-		51%,
-		100% {
-			opacity: 0;
-		}
-	}
 </style>

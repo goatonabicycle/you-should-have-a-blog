@@ -24,76 +24,58 @@ const postsWithStats = posts.map((post) => {
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
-			.posts-table {
-				width: 100%;
-				border-spacing: 0;
-				border-collapse: separate;
+			.posts-grid {
+				display: flex;
+				flex-direction: column;
+				gap: 0.8em;
 			}
-			.posts-table tbody tr {
-				border: none;
+
+			.post-card {
+				background: var(--paper-alt);
+				border: 1px solid var(--border);
+				border-radius: 3px;
 				transition: all 0.2s ease;
 			}
-			.posts-table tbody tr:not(:last-child) td {
-				border-bottom: 1px solid var(--border);
+
+			.post-card:hover {
+				border-color: var(--color-accent);
+				background: rgba(125, 211, 252, 0.02);
+				transform: translateY(-1px);
+				box-shadow: 0 1px 4px rgba(125, 211, 252, 0.08);
 			}
-			.posts-table tbody tr:hover,
-			.posts-table tbody tr:focus-within {
-				background: rgba(125, 211, 252, 0.05);
+
+			.post-card-content {
+				padding: 0.9em 1em;
+				text-align: center;
 			}
-			.posts-table td {
-				padding: 0.8rem 0;
-				border: none;
-				vertical-align: baseline;
-			}
-			.posts-table td:last-child {
-				text-align: right;
-				white-space: nowrap;
-				color: var(--color-dim);
-				font-size: 0.85em;
-			}
-			.posts-table a {
+
+			.post-card-link {
 				text-decoration: none;
 				color: var(--ink);
 				display: block;
-				padding: 0.2em 0;
-				outline: none;
+				transition: color 0.2s ease;
 			}
-			.posts-table a::before {
-				content: "> ";
-				color: var(--color-accent);
-				font-weight: 700;
-				font-size: 0.9em;
-				opacity: 0;
-				transition: opacity 0.2s ease;
-			}
-			.posts-table a:focus::before,
-			.posts-table a:hover::before {
-				opacity: 1;
-			}
-			.posts-table a:focus,
-			.posts-table a:hover {
+
+			.post-card:hover .post-card-link {
 				color: var(--color-accent);
 			}
-			.title {
-				font-size: 1em;
-				font-weight: 400;
-				font-family: inherit;
+
+			.post-card-title {
+				font-size: 0.95em;
+				font-weight: 500;
+				margin-bottom: 0.4em;
+				transition: color 0.2s ease;
+				line-height: 1.3;
 			}
-			.word-count {
-				margin-left: 0.5em;
-				font-size: 0.7em;
+
+			.post-card-meta {
 				color: var(--color-dim);
-				opacity: 0;
-				transition: opacity 0.2s ease;
+				font-size: 0.8em;
+				transition: color 0.2s ease;
 			}
-			.posts-table tr:hover .word-count,
-			.posts-table a:focus .word-count {
-				opacity: 0.7;
-			}
-			.post-meta {
-				color: var(--color-dim);
-				font-size: 0.85em;
-				font-family: inherit;
+
+			.post-card:hover .post-card-meta {
+				color: var(--color-accent);
 			}
 		</style>
 	</head>
@@ -102,30 +84,23 @@ const postsWithStats = posts.map((post) => {
 		<main>
 			<h1>Posts</h1>
 			<section>
-				<table class="posts-table">
-					<tbody>
-						{
-							postsWithStats.map((post) => (
-								<tr>
-									<td>
-										<a href={`/blog/${post.id}/`}>
-											<span class="title">{post.data.title}</span>
-											<span class="word-count">({post.wordCount} words)</span>
-										</a>
-									</td>
-									<td>
-										<div class="post-meta">
-											<FormattedDate
-												date={post.data.pubDate}
-												showDaysAgo={true}
-											/>
+				<div class="posts-grid">
+					{
+						postsWithStats.map((post) => (
+							<div class="post-card">
+								<div class="post-card-content">
+									<a href={`/blog/${post.id}/`} class="post-card-link">
+										<div class="post-card-title">{post.data.title}</div>
+										<div class="post-card-meta">
+											<FormattedDate date={post.data.pubDate} /> ·{" "}
+											{post.wordCount} words
 										</div>
-									</td>
-								</tr>
-							))
-						}
-					</tbody>
-				</table>
+									</a>
+								</div>
+							</div>
+						))
+					}
+				</div>
 			</section>
 		</main>
 		<Footer />

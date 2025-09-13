@@ -26,11 +26,12 @@
 
 html {
 	background: var(--paper);
-	background-image: 
-		radial-gradient(circle at 20% 80%, #ffffff01 0.5px, transparent 0.5px);
+	background-image:
+		radial-gradient(circle at 20% 80%, rgba(125, 211, 252, 0.03) 0.5px, transparent 0.5px);
 	background-size: 12px 12px;
 	background-attachment: fixed;
 	min-height: 100vh;
+	transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
@@ -136,6 +137,18 @@ img {
 	background: var(--paper-alt);
 	margin: 1em 0;
 	display: block;
+	transition: all 0.3s ease;
+	cursor: pointer;
+}
+
+img:hover {
+	border-color: var(--color-accent);
+	box-shadow:
+		0 0 20px rgba(125, 211, 252, 0.3),
+		0 0 40px rgba(125, 211, 252, 0.1),
+		inset 0 0 10px rgba(125, 211, 252, 0.05);
+
+	background: rgba(125, 211, 252, 0.02);
 }
 
 video {
