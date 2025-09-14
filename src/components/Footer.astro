@@ -3,6 +3,7 @@ import InstagramIcon from "./icons/InstagramIcon.astro";
 import LinkedInIcon from "./icons/LinkedInIcon.astro";
 import GitHubIcon from "./icons/GitHubIcon.astro";
 import EmailIcon from "./icons/EmailIcon.astro";
+import RSSIcon from "./icons/RSSIcon.astro";
 
 const today = new Date();
 ---
@@ -73,6 +74,10 @@ const today = new Date();
 			title="GitHub"
 		>
 			<GitHubIcon size={16} />
+		</a>
+		<span class="separator">·</span>
+		<a href="/rss.xml" title="RSS Feed">
+			<RSSIcon size={16} />
 		</a>
 	</div>
 </footer>
