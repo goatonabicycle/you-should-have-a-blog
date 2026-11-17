@@ -5,6 +5,7 @@ import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import { proseText } from "../utils/postStats";
 
 const posts = (await getCollection("blog"))
 	.filter((post) => !post.data.draft)
@@ -13,7 +14,7 @@ const latestPost = posts[0];
 
 let latestPostStats = { words: 0, vowels: 0, consonants: 0 };
 if (latestPost) {
-	const plainText = latestPost.body || "";
+	const plainText = proseText(latestPost.body || "");
 	const words = plainText.split(/\s+/).filter((word) => word.length > 0);
 	latestPostStats.words = words.length;
 
